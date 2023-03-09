@@ -123,6 +123,14 @@ public class FirmwareUpdatingActivity extends Activity {
         filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
         filter.addDataScheme("file");
         registerReceiver(mReceiver, filter);
+
+        LOG("onCreate() : start the update automatically");
+        Intent intent = new Intent(mContext, UpdateAndRebootActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(RKUpdateService.EXTRA_IMAGE_PATH, mImageFilePath);
+        startActivity(intent);
+
+        finish();
     }
 
     @Override
