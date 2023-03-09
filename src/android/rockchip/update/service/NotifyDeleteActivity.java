@@ -1,5 +1,6 @@
 package android.rockchip.update.service;
 
+import java.io.File;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -66,6 +67,15 @@ public class NotifyDeleteActivity extends Activity {
         mPath = startIntent.getStringExtra("path");
         if(flag == RKUpdateService.UPDATE_SUCCESS) {
         	text.setText(getString(R.string.update_success) + getString(R.string.ask_delete_package));
+
+		String fileName = "/data/media/0/update.zip";
+		Log.d(TAG, "Update successfully completed, deleting " + fileName);
+		File f_ota = new File(fileName);
+		if (f_ota.exists()) {
+			f_ota.delete();
+			Log.d(TAG, "delete complete! path=" + fileName);
+			finish();
+		}
         }else if(flag == RKUpdateService.UPDATE_FAILED) {
         	text.setText(getString(R.string.update_failed) + getString(R.string.ask_delete_package));
         }
